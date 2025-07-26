@@ -3,9 +3,7 @@ services:
     name: kidanean-journal
     env: docker
     plan: free
-    branch: main
-    dockerfilePath: Dockerfile
-    healthCheckPath: /
+    dockerfilePath: ./Dockerfile
     envVars:
-      - key: PORT
-        value: 8080
+      - key: JOURNAL_NAME
+        value: "Kidanean Journal"

@@ -4,6 +4,3 @@ services:
     env: docker
     plan: free
     dockerfilePath: ./Dockerfile
-    envVars:
-      - key: JOURNAL_NAME
-        value: "Kidanean Journal"

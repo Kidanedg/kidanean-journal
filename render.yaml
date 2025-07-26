@@ -1,23 +1,11 @@
 services:
   - type: web
     name: kidanean-journal
-    env: php
-    buildCommand: composer install
-    startCommand: php -S 0.0.0.0:8080 -t public
+    env: docker
     plan: free
+    branch: main
+    dockerfilePath: Dockerfile
+    healthCheckPath: /
     envVars:
-      - key: DB_DRIVER
-        value: mysql
-      - key: DB_HOST
-        value: your-db-hostname
-      - key: DB_PORT
-        value: 3306
-      - key: DB_NAME
-        value: your-db-name
-      - key: DB_USER
-        value: your-db-username
-      - key: DB_PASSWORD
-        value: your-db-password
-      - key: APP_URL
-        value: https://kidanean-journal.onrender.com
-
+      - key: PORT
+        value: 8080

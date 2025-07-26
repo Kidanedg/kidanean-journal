@@ -1,5 +1,5 @@
 # Use the official OJS image from PKP
-FROM ghcr.io/pkp/ojs:3.4.0-5
+FROM flaviovs/ojs:3.3.0-10
 
 # Set the port Render expects
 ENV PORT=8080

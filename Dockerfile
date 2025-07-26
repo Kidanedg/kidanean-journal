@@ -1,11 +1,8 @@
-# Use the official OJS image from PKP
+# Use a public OJS image (not from GHCR)
 FROM flaviovs/ojs:3.3.0-10
 
-# Set the port Render expects
-ENV PORT=8080
-
-# Expose the web port
+# Expose the port
 EXPOSE 8080
 
-# Start Apache and services using Supervisor (default from PKP image)
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+# Default Render start command
+CMD ["apache2-foreground"]

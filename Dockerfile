@@ -1,11 +1,21 @@
+# Use the official OJS image (version 3.4.0-5 or latest stable)
 FROM ghcr.io/pkp/ojs:3.4.0-5
 
-# Optional: add your custom themes or files
-# COPY ./your-theme /var/www/html/plugins/themes/your-theme
+# Optional: Set environment variables directly here (you can also do it in render.yaml)
+# ENV DB_HOST=mysql-hostname
+# ENV DB_NAME=ojs
+# ENV DB_USER=ojs_user
+# ENV DB_PASSWORD=your_password
 
-# Set permissions if needed
-RUN chown -R www-data:www-data /var/www/html
+# Optional: copy custom theme, plugins, or config files
+# COPY custom-theme /var/www/html/plugins/themes/custom-theme
+# COPY config.inc.php /var/www/html/config.inc.php
 
+# Render uses PORT env variable internally
+ENV PORT=8080
+
+# Expose OJS’s default HTTP port (Render will route traffic here)
 EXPOSE 8080
 
-CMD ["php-fpm"]
+# Start Apache and PHP-FPM via supervisor (default entrypoint from PKP image)
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

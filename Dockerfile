@@ -1,29 +1,37 @@
-FROM php:8.0-apache
+# Use a base image with PHP and Apache
+FROM php:7.4-apache
 
-# Install system dependencies
+# Set environment variables
+ENV OJS_VERSION=ojs-3_3_0-15
+
+# Install required packages
 RUN apt-get update && apt-get install -y \
+    unzip \
+    git \
     libpng-dev \
     libjpeg-dev \
     libpq-dev \
     libzip-dev \
-    libfreetype6-dev \
-    zip unzip git wget \
-    && docker-php-ext-install gd pdo pdo_mysql mysqli zip
+    libxml2-dev \
+    libonig-dev \
+    zip \
+    libicu-dev \
+    && docker-php-ext-install pdo pdo_mysql mysqli zip gd intl mbstring xml
 
-# Enable Apache mod_rewrite
+# Enable Apache rewrite module
 RUN a2enmod rewrite
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Download OJS from GitHub (latest stable 3.3.0-x or 3.4.0-x)
-RUN git clone --depth=1 --branch ojs-stable-3_3_0 https://github.com/pkp/ojs.git .
+# Download and extract OJS source
+RUN git clone --depth=1 --branch $OJS_VERSION https://github.com/pkp/ojs.git .
 
-# Set file permissions
+# Fix permissions
 RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
 
-# Expose port
+# Expose default Apache port
 EXPOSE 80
 
-# Start Apache
+# Start Apache server
 CMD ["apache2-foreground"]
